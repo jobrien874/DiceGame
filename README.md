@@ -1,4 +1,6 @@
-# Getting Started with Create React App
+# Dice Game Utility ->
+
+If you need some dice at home for board games or such
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
