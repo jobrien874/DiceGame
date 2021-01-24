@@ -4,7 +4,7 @@ import React from "react";
 const Dice = ({ diceNumber }) => {
 
   const diceImage = (nmbr) => {
-    let url = "http://roll.diceapi.com/images/poorly-drawn/d6/";
+    let url = "/";
     url += nmbr + ".png"
     return url
   }
