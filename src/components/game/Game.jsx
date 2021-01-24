@@ -62,7 +62,7 @@ class Game extends Component {
               ))}
             </select>
           </div>
-          <div className="form-group mt-2">
+{/*           <div className="form-group mt-2">
             <label for="diceCount">Dice Type:</label>
             <select
               className="mt-4 form-control m-auto mb-0"
@@ -75,7 +75,7 @@ class Game extends Component {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
         </div>
         <button className="btn btn-secondary mt-4" onClick={this.getDiceRoll}>
           Click To Get Dice Roll
