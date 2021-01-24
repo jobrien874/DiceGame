@@ -9,7 +9,7 @@ class Game extends Component {
     diceCount: 1,
     diceNumbers: [1],
     total: 1,
-    maxDiceAmount: [1, 2, 3, 4, 5, 6],
+    maxDiceAmount: [1, 2, 3, 4, 5, 6, 10, 50, 100],
     diceStyle: ["Regular", "Chaos", "Wood"],
     sameNumber: false,
   };
