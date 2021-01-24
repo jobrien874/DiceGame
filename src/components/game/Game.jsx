@@ -14,6 +14,13 @@ class Game extends Component {
     sameNumber: false,
   };
 
+  componentDidMount () {
+    const script = document.createElement("script");
+    script.src = "https://c6.patreon.com/becomePatronButton.bundle.js";
+    script.async = true;
+    document.body.appendChild(script);
+  }
+
   start = () => {
     let audio = new Audio("/roll.mp3");
     audio.play();
@@ -53,7 +60,7 @@ class Game extends Component {
         <DiceContainer diceCount={diceCount} diceNumber={diceNumbers} />
         <div className="container-fluid w-25">
           <div className="form-group mt-2">
-            <label for="diceCount">Dice Count:</label>
+            <label htmlFor="diceCount">Dice Count:</label>
             <select
               className="mt-4 form-control m-auto mb-0"
               id="diceCount"
