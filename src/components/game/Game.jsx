@@ -8,6 +8,7 @@ class Game extends Component {
   state = {
     diceCount: 1,
     diceNumbers: [1],
+    total: 1,
     maxDiceAmount: [1, 2, 3, 4, 5, 6],
     diceStyle: ["Regular", "Chaos", "Wood"],
     sameNumber: false,
@@ -20,12 +21,14 @@ class Game extends Component {
 
   setDiceNumbers = (diceCount) => {
     let diceNumbers = [];
+    let total = 0;
     for (let i = 0; i < diceCount; i++) {
       let counter = Math.floor(Math.random() * 6) + 1;
+      total+=counter;
       diceNumbers.push(counter);
     }
 
-    this.setState({ diceNumbers });
+    this.setState({ diceNumbers, total });
   };
 
   getDiceRoll = () => {
@@ -42,10 +45,11 @@ class Game extends Component {
   getDiceStyle = (e) => {};
 
   render() {
-    const { diceCount, diceNumbers, maxDiceAmount, diceStyle } = this.state;
+    const { diceCount, diceNumbers, maxDiceAmount, diceStyle, total} = this.state;
 
     return (
       <React.Fragment>
+        <h1>{total}</h1>
         <DiceContainer diceCount={diceCount} diceNumber={diceNumbers} />
         <div className="container-fluid w-25">
           <div className="form-group mt-2">
