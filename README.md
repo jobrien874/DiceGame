@@ -2,7 +2,7 @@
 
 If you need some dice at home for board games or such
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+See the Utility here for use -> https://diceutilboardgame.herokuapp.com/
 
 ## Available Scripts
 
