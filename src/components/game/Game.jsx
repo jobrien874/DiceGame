@@ -9,12 +9,36 @@ class Game extends Component {
     diceCount: 1,
     diceNumbers: [1],
     total: 1,
-    maxDiceAmount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 50, 100],
+    maxDiceAmount: [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      50,
+      100,
+    ],
     diceStyle: ["Regular", "Chaos", "Wood"],
+    diceType: ["D4", "D6", "D8", "D10", "D12", "D20"],
     sameNumber: false,
   };
 
-  componentDidMount () {
+  componentDidMount() {
     const script = document.createElement("script");
     script.src = "https://c6.patreon.com/becomePatronButton.bundle.js";
     script.async = true;
@@ -31,7 +55,7 @@ class Game extends Component {
     let total = 0;
     for (let i = 0; i < diceCount; i++) {
       let counter = Math.floor(Math.random() * 6) + 1;
-      total+=counter;
+      total += counter;
       diceNumbers.push(counter);
     }
 
@@ -52,7 +76,13 @@ class Game extends Component {
   getDiceStyle = (e) => {};
 
   render() {
-    const { diceCount, diceNumbers, maxDiceAmount, diceStyle, total} = this.state;
+    const {
+      diceCount,
+      diceNumbers,
+      maxDiceAmount,
+      diceStyle,
+      total,
+    } = this.state;
 
     return (
       <React.Fragment>
@@ -73,7 +103,22 @@ class Game extends Component {
               ))}
             </select>
           </div>
-{/*           <div className="form-group mt-2">
+          {/*           <div className="form-group mt-2">
+            <label for="diceCount">Dice Style:</label>
+            <select
+              className="mt-4 form-control m-auto mb-0"
+              id="diceStyle"
+              onChange={this.getDiceStyle}
+            >
+              {diceStyle.map((style) => (
+                <option key={style} value={style}>
+                  {style}
+                </option>
+              ))}
+            </select>
+          </div> */}
+
+          {/*           <div className="form-group mt-2">
             <label for="diceCount">Dice Type:</label>
             <select
               className="mt-4 form-control m-auto mb-0"
