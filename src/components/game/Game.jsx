@@ -34,8 +34,9 @@ class Game extends Component {
       100,
     ],
     diceStyle: ["Regular", "Chaos", "Wood"],
-    diceType: ["D4", "D6", "D8", "D10", "D12", "D20"],
+    diceType: ["D6", "D4"],
     sameNumber: false,
+    diceTypeSelected: 6
   };
 
   componentDidMount() {
@@ -53,8 +54,10 @@ class Game extends Component {
   setDiceNumbers = (diceCount) => {
     let diceNumbers = [];
     let total = 0;
+    let diceType = this.state.diceTypeSelected;
     for (let i = 0; i < diceCount; i++) {
-      let counter = Math.floor(Math.random() * 6) + 1;
+
+      let counter = Math.floor(Math.random() * diceType) + 1;
       total += counter;
       diceNumbers.push(counter);
     }
@@ -73,7 +76,27 @@ class Game extends Component {
     this.setDiceNumbers(diceCount);
   };
 
-  getDiceStyle = (e) => {};
+  getDiceStyle = (e) => {
+    // TODO
+  };
+
+  getDiceType = (e) => {
+    let diceType = e.target.value;
+    switch (diceType) {
+      case "D6":
+        diceType = 6;
+        break;
+
+      case "D4":
+        diceType = 4;
+        break;
+
+      default:
+        diceType = 6;
+        break;
+    }
+    this.setState({ diceTypeSelected:diceType });
+  };
 
   render() {
     const {
@@ -82,6 +105,7 @@ class Game extends Component {
       maxDiceAmount,
       diceStyle,
       total,
+      diceType
     } = this.state;
 
     return (
@@ -90,6 +114,20 @@ class Game extends Component {
         <DiceContainer diceCount={diceCount} diceNumber={diceNumbers} />
         <div className="container-fluid w-25">
           <div className="form-group mt-2">
+          <div className="form-group mt-2">
+            <label for="diceCount">Dice Type:</label>
+            <select
+              className="mt-4 form-control m-auto mb-0"
+              id="diceStyle"
+              onChange={this.getDiceType}
+            >
+              {diceType.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
+          </div>
             <label htmlFor="diceCount">Dice Count:</label>
             <select
               className="mt-4 form-control m-auto mb-0"
@@ -105,21 +143,6 @@ class Game extends Component {
           </div>
           {/*           <div className="form-group mt-2">
             <label for="diceCount">Dice Style:</label>
-            <select
-              className="mt-4 form-control m-auto mb-0"
-              id="diceStyle"
-              onChange={this.getDiceStyle}
-            >
-              {diceStyle.map((style) => (
-                <option key={style} value={style}>
-                  {style}
-                </option>
-              ))}
-            </select>
-          </div> */}
-
-          {/*           <div className="form-group mt-2">
-            <label for="diceCount">Dice Type:</label>
             <select
               className="mt-4 form-control m-auto mb-0"
               id="diceStyle"
