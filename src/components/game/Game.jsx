@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import DiceContainer from "../dice/DiceContainer";
 import DiceResults from "../dice/DiceResults";
 import MuteButton from "../audio/MuteButton";
+import Buttons from "../buttons/Buttons"
 // import PropTypes from 'prop-types';
 
 // Class Component
@@ -12,6 +13,7 @@ class Game extends Component {
     diceNumbers: [1],
     total: 1,
     diceModifier: 0,
+    selectedDice: [],
     logPastResults: [],
     mute: false,
     maxDiceAmount: [
@@ -65,19 +67,34 @@ class Game extends Component {
   };
 
   setDiceNumbers = (diceCount) => {
-    let diceNumbers = [];
-    let total = 0;
-    let logPastResults = this.state.logPastResults
-    let diceType = this.state.diceTypeSelected;
-    let diceModifier = parseInt(this.state.diceModifier);
-    for (let i = 0; i < diceCount; i++) {
-      let counter = Math.floor(Math.random() * diceType) + 1 + diceModifier;
-      total += counter;
-      diceNumbers.push(counter);
-    }
+    if(diceCount.constructor === Array){
+      let diceNumbers = [];
+      let total = 0;
+      let logPastResults = this.state.logPastResults
+      let diceModifier = parseInt(this.state.diceModifier);
+      for (let i = 0; i < diceCount.length; i++) {
+        let counter = Math.floor(Math.random() * diceCount[i]) + 1 + diceModifier;
+        total += counter;
+        diceNumbers.push(counter);
+      }
 
-    logPastResults.push(total)
-    this.setState({ diceNumbers, total, logPastResults });
+      logPastResults.push(total)
+      this.setState({ diceNumbers, total, logPastResults });
+    }else {
+      let diceNumbers = [];
+      let total = 0;
+      let logPastResults = this.state.logPastResults
+      let diceType = this.state.diceTypeSelected;
+      let diceModifier = parseInt(this.state.diceModifier);
+      for (let i = 0; i < diceCount; i++) {
+        let counter = Math.floor(Math.random() * diceType) + 1 + diceModifier;
+        total += counter;
+        diceNumbers.push(counter);
+      }
+
+      logPastResults.push(total)
+      this.setState({ diceNumbers, total, logPastResults });
+    }
   };
 
   setDiceModifier = (e) => {
@@ -87,7 +104,12 @@ class Game extends Component {
 
   getDiceRoll = () => {
     this.startAudio();
-    this.setDiceNumbers(this.state.diceCount);
+    let selectedDice = this.state.selectedDice
+    if(selectedDice.length > 0) {
+    this.setDiceNumbers(this.state.selectedDice);
+    } else {
+      this.setDiceNumbers(this.state.diceCount);
+    }
   };
 
   getDiceNumber = (e) => {
@@ -138,6 +160,24 @@ class Game extends Component {
     this.setState({ diceTypeSelected: diceType });
   };
 
+  addDice = () => {
+    let selectedDice = this.state.selectedDice;
+    let diceNumbers = this.state.diceNumbers;
+    let diceCount= this.state.diceCount
+    let diceType = this.state.diceTypeSelected;
+
+    for(let i = 0; i < diceCount; i++) {
+      selectedDice.push(diceType)
+      diceNumbers.push(1)
+    }
+    this.setState({selectedDice})
+  }
+
+  refreshDice = () => {
+    let selectedDice = [];
+    this.setState({selectedDice})
+  };
+
   render() {
     const {
       diceCount,
@@ -147,14 +187,23 @@ class Game extends Component {
       logPastResults,
       total,
       diceType,
+      selectedDice,
     } = this.state;
 
     return (
       <React.Fragment>
         <DiceResults logPastResults={logPastResults}/>
-        <DiceContainer total={total} diceCount={diceCount} diceNumber={diceNumbers} />
+        <DiceContainer total={total} diceCount={diceCount} selectedDice={selectedDice} diceNumber={diceNumbers} />
         <MuteButton mute={mute} setMute={this.setMute} />
         <div className="container-fluid w-25  DiceForm">
+        <div className="form-group mt-2 DiceFormInput">
+              <label htmlFor="selectedDice">Selected Dice:</label>
+              <div id="selectedDice">
+                {selectedDice.map((dice) => (
+                  <span>D{dice}</span>
+                ))}
+              </div>
+            </div>
             <div className="form-group mt-2 DiceFormInput">
               <label htmlFor="diceCount">Dice Type:</label>
               <select
@@ -208,9 +257,7 @@ class Game extends Component {
             </select>
           </div> */}
         </div>
-        <button className="btn btn-secondary mt-4" onClick={this.getDiceRoll}>
-          Click To Get Dice Roll
-        </button>
+        <Buttons selectedDice={selectedDice} getDiceRoll={this.getDiceRoll} refreshDice={this.refreshDice} addDice={this.addDice}/>
       </React.Fragment>
     );
   }
