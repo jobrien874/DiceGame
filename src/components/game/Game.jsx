@@ -13,7 +13,7 @@ class Game extends Component {
     total: 1,
     diceModifier: 0,
     logPastResults: [],
-    mute: true,
+    mute: false,
     maxDiceAmount: [
       1,
       2,
