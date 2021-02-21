@@ -8,7 +8,7 @@ const DiceContainer = ({ diceCount, diceNumber, total, selectedDice }) => {
   var rows = [];
   let src = false;
   if(selectedDice.length > 0) {
-    for (var i = 0; i < selectedDice.length; i++) {
+    for (let i = 0; i < selectedDice.length; i++) {
       try{
         require(`../../../public/${diceNumber[i]}.png`)
         src = `/${diceNumber[i]}.png`
@@ -19,7 +19,7 @@ const DiceContainer = ({ diceCount, diceNumber, total, selectedDice }) => {
         rows.push(<Dice key={i} total={total} diceNumber={diceNumber[i]} diceImage={src} />);
     }
   } else {
-  for (var i = 0; i < diceCount; i++) {
+  for (let i = 0; i < diceCount; i++) {
     try{
       require(`../../../public/${diceNumber[i]}.png`)
       src = `/${diceNumber[i]}.png`
