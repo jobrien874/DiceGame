@@ -6,8 +6,17 @@ import Dice from '../dice/Dice'
 const DiceContainer = ({ diceCount, diceNumber }) => {
 
   var rows = [];
+  let src = false;
   for (var i = 0; i < diceCount; i++) {
-      rows.push(<Dice key={i} diceNumber={diceNumber[i]} />);
+    try{
+      require(`../../../public/${diceNumber[i]}.png`)
+      src = `/${diceNumber[i]}.png`
+      }
+      catch(err){
+          src = false;
+      }
+      console.log(src)
+      rows.push(<Dice key={i} diceNumber={diceNumber[i]} diceImage={src} />);
   }
   return (
     <div className="container-fluid">

@@ -6,7 +6,7 @@ import React from "react";
 const DiceResults = ({logPastResults}) => {
   let results = []
   for (var i = 0; i < logPastResults.length; i++) {
-      results.push(<li className="ResultsContainer-item">{logPastResults[i]}</li>);
+      results.push(<li className="ResultsContainer-item">{logPastResults[i]} Total Score</li>);
   }
   return (
     <div className="ResultsContainer container-fluid">

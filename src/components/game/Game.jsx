@@ -188,6 +188,7 @@ class Game extends Component {
 
             <label htmlFor="diceModifier">Modifier:</label>
             <input
+              placeholder="0"
               type="number"
               onChange={this.setDiceModifier}
               className="mt-4 form-control m-auto mo-0"
