@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import DiceContainer from "../dice/DiceContainer";
+import DiceResults from "../dice/DiceResults";
+import MuteButton from "../audio/MuteButton";
 // import PropTypes from 'prop-types';
 
 // Class Component
@@ -9,6 +11,8 @@ class Game extends Component {
     diceCount: 1,
     diceNumbers: [1],
     total: 1,
+    diceModifier: 0,
+    mute: false,
     maxDiceAmount: [
       1,
       2,
@@ -34,9 +38,9 @@ class Game extends Component {
       100,
     ],
     diceStyle: ["Regular", "Chaos", "Wood"],
-    diceType: ["D6", "D4"],
+    diceType: ["D6", "D4", "D8", "D10", "D12", "D20", "D100"],
     sameNumber: false,
-    diceTypeSelected: 6
+    diceTypeSelected: 6,
   };
 
   componentDidMount() {
@@ -46,18 +50,27 @@ class Game extends Component {
     document.body.appendChild(script);
   }
 
-  start = () => {
-    let audio = new Audio("/roll.mp3");
-    audio.play();
+  startAudio = () => {
+    let mute = this.state.mute;
+    if (!mute) {
+      let audio = new Audio("/roll.mp3");
+      audio.play();
+    }
+  };
+
+  setMute = () => {
+    let mute = !this.state.mute;
+    this.setState({ mute });
   };
 
   setDiceNumbers = (diceCount) => {
     let diceNumbers = [];
     let total = 0;
     let diceType = this.state.diceTypeSelected;
+    let diceModifier = parseInt(this.state.diceModifier);
+    console.log(diceModifier);
     for (let i = 0; i < diceCount; i++) {
-
-      let counter = Math.floor(Math.random() * diceType) + 1;
+      let counter = Math.floor(Math.random() * diceType) + 1 + diceModifier;
       total += counter;
       diceNumbers.push(counter);
     }
@@ -65,8 +78,13 @@ class Game extends Component {
     this.setState({ diceNumbers, total });
   };
 
+  setDiceModifier = (e) => {
+    let diceModifier = e.target.value;
+    this.setState({ diceModifier });
+  };
+
   getDiceRoll = () => {
-    this.start();
+    this.startAudio();
     this.setDiceNumbers(this.state.diceCount);
   };
 
@@ -91,11 +109,31 @@ class Game extends Component {
         diceType = 4;
         break;
 
+      case "D8":
+        diceType = 8;
+        break;
+
+      case "D10":
+        diceType = 10;
+        break;
+
+      case "D12":
+        diceType = 12;
+        break;
+
+      case "D20":
+        diceType = 20;
+        break;
+
+      case "D100":
+        diceType = 100;
+        break;
+
       default:
         diceType = 6;
         break;
     }
-    this.setState({ diceTypeSelected:diceType });
+    this.setState({ diceTypeSelected: diceType });
   };
 
   render() {
@@ -103,31 +141,35 @@ class Game extends Component {
       diceCount,
       diceNumbers,
       maxDiceAmount,
+      mute,
+      diceModifier,
       diceStyle,
       total,
-      diceType
+      diceType,
     } = this.state;
 
     return (
       <React.Fragment>
         <h1>{total}</h1>
         <DiceContainer diceCount={diceCount} diceNumber={diceNumbers} />
+        <DiceResults />
+        <MuteButton mute={mute} setMute={this.setMute} />
         <div className="container-fluid w-25">
           <div className="form-group mt-2">
-          <div className="form-group mt-2">
-            <label for="diceCount">Dice Type:</label>
-            <select
-              className="mt-4 form-control m-auto mb-0"
-              id="diceStyle"
-              onChange={this.getDiceType}
-            >
-              {diceType.map((type) => (
-                <option key={type} value={type}>
-                  {type}
-                </option>
-              ))}
-            </select>
-          </div>
+            <div className="form-group mt-2">
+              <label for="diceCount">Dice Type:</label>
+              <select
+                className="mt-4 form-control m-auto mb-0"
+                id="diceStyle"
+                onChange={this.getDiceType}
+              >
+                {diceType.map((type) => (
+                  <option key={type} value={type}>
+                    {type}
+                  </option>
+                ))}
+              </select>
+            </div>
             <label htmlFor="diceCount">Dice Count:</label>
             <select
               className="mt-4 form-control m-auto mb-0"
@@ -140,6 +182,14 @@ class Game extends Component {
                 </option>
               ))}
             </select>
+
+            <label htmlFor="diceModifier">Modifier:</label>
+            <input
+              type="number"
+              onChange={this.setDiceModifier}
+              className="mt-4 form-control m-auto mo-0"
+              id="diceModifier"
+            />
           </div>
           {/*           <div className="form-group mt-2">
             <label for="diceCount">Dice Style:</label>
