@@ -145,8 +145,6 @@ class Game extends Component {
       maxDiceAmount,
       mute,
       logPastResults,
-      diceModifier,
-      diceStyle,
       total,
       diceType,
     } = this.state;
