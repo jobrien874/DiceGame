@@ -12,7 +12,8 @@ class Game extends Component {
     diceNumbers: [1],
     total: 1,
     diceModifier: 0,
-    mute: false,
+    logPastResults: [],
+    mute: true,
     maxDiceAmount: [
       1,
       2,
@@ -66,16 +67,17 @@ class Game extends Component {
   setDiceNumbers = (diceCount) => {
     let diceNumbers = [];
     let total = 0;
+    let logPastResults = this.state.logPastResults
     let diceType = this.state.diceTypeSelected;
     let diceModifier = parseInt(this.state.diceModifier);
-    console.log(diceModifier);
     for (let i = 0; i < diceCount; i++) {
       let counter = Math.floor(Math.random() * diceType) + 1 + diceModifier;
       total += counter;
       diceNumbers.push(counter);
     }
 
-    this.setState({ diceNumbers, total });
+    logPastResults.push(total)
+    this.setState({ diceNumbers, total, logPastResults });
   };
 
   setDiceModifier = (e) => {
@@ -142,6 +144,7 @@ class Game extends Component {
       diceNumbers,
       maxDiceAmount,
       mute,
+      logPastResults,
       diceModifier,
       diceStyle,
       total,
@@ -152,12 +155,12 @@ class Game extends Component {
       <React.Fragment>
         <h1>{total}</h1>
         <DiceContainer diceCount={diceCount} diceNumber={diceNumbers} />
-        <DiceResults />
+        <DiceResults logPastResults={logPastResults}/>
         <MuteButton mute={mute} setMute={this.setMute} />
         <div className="container-fluid w-25">
           <div className="form-group mt-2">
             <div className="form-group mt-2">
-              <label for="diceCount">Dice Type:</label>
+              <label htmlFor="diceCount">Dice Type:</label>
               <select
                 className="mt-4 form-control m-auto mb-0"
                 id="diceStyle"
@@ -192,7 +195,7 @@ class Game extends Component {
             />
           </div>
           {/*           <div className="form-group mt-2">
-            <label for="diceCount">Dice Style:</label>
+            <label htmlFor="diceCount">Dice Style:</label>
             <select
               className="mt-4 form-control m-auto mb-0"
               id="diceStyle"
