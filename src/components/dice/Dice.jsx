@@ -1,7 +1,7 @@
 import React from "react";
 
 //stateless functional component
-const Dice = ({ diceImage, total }) => {
+const Dice = ({ diceImage, diceNumber }) => {
   if (diceImage) {
     return (
       <React.Fragment>
@@ -14,7 +14,7 @@ const Dice = ({ diceImage, total }) => {
     return (
       <React.Fragment>
         <div className="DiceContainer diceImageTotal">
-          <span className="DiceContainer-total">{total}</span>
+          <span className="DiceContainer-total">{diceNumber}</span>
           <img className="DiceImage" alt="dice" src="./dice.png" />
         </div>
       </React.Fragment>

@@ -153,12 +153,11 @@ class Game extends Component {
 
     return (
       <React.Fragment>
-        <DiceContainer total={total} diceCount={diceCount} diceNumber={diceNumbers} />
         <DiceResults logPastResults={logPastResults}/>
+        <DiceContainer total={total} diceCount={diceCount} diceNumber={diceNumbers} />
         <MuteButton mute={mute} setMute={this.setMute} />
-        <div className="container-fluid w-25">
-          <div className="form-group mt-2">
-            <div className="form-group mt-2">
+        <div className="container-fluid w-25  DiceForm">
+            <div className="form-group mt-2 DiceFormInput">
               <label htmlFor="diceCount">Dice Type:</label>
               <select
                 className="mt-4 form-control m-auto mb-0"
@@ -172,6 +171,7 @@ class Game extends Component {
                 ))}
               </select>
             </div>
+            <div className="form-group mt-2 DiceFormInput">
             <label htmlFor="diceCount">Dice Count:</label>
             <select
               className="mt-4 form-control m-auto mb-0"
@@ -184,7 +184,8 @@ class Game extends Component {
                 </option>
               ))}
             </select>
-
+            </div>
+            <div className="form-group mt-2 DiceFormInput">
             <label htmlFor="diceModifier">Modifier:</label>
             <input
               placeholder="0"
@@ -193,7 +194,7 @@ class Game extends Component {
               className="mt-4 form-control m-auto mo-0"
               id="diceModifier"
             />
-          </div>
+            </div>
           {/*           <div className="form-group mt-2">
             <label htmlFor="diceCount">Dice Style:</label>
             <select

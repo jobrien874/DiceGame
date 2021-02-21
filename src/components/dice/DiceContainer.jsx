@@ -18,7 +18,7 @@ const DiceContainer = ({ diceCount, diceNumber, total }) => {
       rows.push(<Dice key={i} total={total} diceNumber={diceNumber[i]} diceImage={src} />);
   }
   return (
-    <div className="container-fluid">
+    <div className="container-fluid DiceBoard">
       {rows}
     </div>
   )

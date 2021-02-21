@@ -45,32 +45,46 @@
   width: 100%;
 }
 
-.DiceContainer-total {
-  position: absolute;
-  top: 31%;
-  left: 38%;
-  font-size: 37px;
+.DiceBoard {
+  max-height: 300px;
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1 0 25%;
+  max-width: 320px;
+  overflow: scroll;
 }
 
-.DiceContainer, .diceImageTotal {
-  width: 177px;
-  height: 177px;
+.DiceContainer-total {
+  position: absolute;
+  font-size: 1em;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.DiceContainer {
+  flex: 1 0 25%;
+}
+
+.DiceContainer,
+.diceImageTotal {
+  max-width: 177px;
+  max-height: 177px;
   position: relative;
   margin: 0 auto;
   margin-bottom: 20px;
 }
-
 
 .ResultsContainer > table > thead > tr > th {
   color: white;
   font-size: 20px;
 }
 
-.ResultsContainer > table > tbody > tr > td,  .ResultsContainer > table > tbody > tr > th{
+.ResultsContainer > table > tbody > tr > td,
+.ResultsContainer > table > tbody > tr > th {
   font-size: 20px;
   color: white;
 }
-
 
 .App-footer {
   background-color: #282c34;
@@ -93,5 +107,34 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+
+  .DiceForm {
+    width: 100%!important;
+    display: flex;
+  }
+
+  .DiceBoard {
+    max-height: 190px;
+  }
+
+  .DiceFormInput {
+    width: 32%;
+    margin: 0 auto;
+  }
+
+  .ResultsContainer {
+    border: 2px solid grey;
+    border-radius: 4px;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 160px;
+    overflow-x: scroll;
+    margin-bottom: 20px;
   }
 }

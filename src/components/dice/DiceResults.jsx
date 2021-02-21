@@ -7,7 +7,7 @@ const DiceResults = ({logPastResults}) => {
   let results = []
   for (var i = 0; i < logPastResults.length; i++) {
       results.push(
-      <tr>
+      <tr key={i}>
       <th scope="row" className="">{i + 1}</th>
       <td className="ResultsContainer-item">{logPastResults[i]}</td>
       </tr>
