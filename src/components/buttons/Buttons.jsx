@@ -3,7 +3,7 @@ import React from "react";
 const Buttons = ({ selectedDice, getDiceRoll, refreshDice, addDice }) => {
   if (selectedDice.length === 0) {
     return (
-      <div class="ButtonContainer">
+      <div className="ButtonContainer">
         <button className="btn btn-secondary mt-4" onClick={addDice}>
           Add Dice
         </button>
@@ -14,7 +14,7 @@ const Buttons = ({ selectedDice, getDiceRoll, refreshDice, addDice }) => {
     );
   } else {
     return (
-      <div class="ButtonContainer">
+      <div className="ButtonContainer">
         <button className="btn btn-secondary mt-4" onClick={refreshDice}>
           Refresh Dice
         </button>

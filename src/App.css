@@ -45,6 +45,26 @@
   display: flex;
 }
 
+.ButtonContainer .btn {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.ResultsContainer-footer {
+  position: absolute;
+  bottom: 0;
+  height: 50px;
+  width: 100%;
+}
+
+.ResultsContainer-footer .btn {
+  margin-right: 5px;
+}
+
+.SelectedDiceContainer-item {
+  margin-right: 10px;
+}
+
 .DiceImage {
   width: 100%;
 }

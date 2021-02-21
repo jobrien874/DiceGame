@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import DiceContainer from "../dice/DiceContainer";
 import DiceResults from "../dice/DiceResults";
 import MuteButton from "../audio/MuteButton";
-import Buttons from "../buttons/Buttons"
+import Buttons from "../buttons/Buttons";
 // import PropTypes from 'prop-types';
 
 // Class Component
@@ -51,6 +51,11 @@ class Game extends Component {
     script.src = "https://c6.patreon.com/becomePatronButton.bundle.js";
     script.async = true;
     document.body.appendChild(script);
+    let oldState = window.localStorage.getItem("oldState");
+    if (oldState) {
+      let olderState = JSON.parse(oldState);
+      this.setState(olderState)
+    }
   }
 
   startAudio = () => {
@@ -61,29 +66,41 @@ class Game extends Component {
     }
   };
 
+  saveGame = () => {
+    // save game
+    window.localStorage.setItem("oldState", JSON.stringify(this.state));
+  };
+
+  clearGame = () => {
+    // delete memory and restore state
+    localStorage.clear();
+    window.location.reload();
+  };
+
   setMute = () => {
     let mute = !this.state.mute;
     this.setState({ mute });
   };
 
   setDiceNumbers = (diceCount) => {
-    if(diceCount.constructor === Array){
+    if (diceCount.constructor === Array) {
       let diceNumbers = [];
       let total = 0;
-      let logPastResults = this.state.logPastResults
+      let logPastResults = this.state.logPastResults;
       let diceModifier = parseInt(this.state.diceModifier);
       for (let i = 0; i < diceCount.length; i++) {
-        let counter = Math.floor(Math.random() * diceCount[i]) + 1 + diceModifier;
+        let counter =
+          Math.floor(Math.random() * diceCount[i]) + 1 + diceModifier;
         total += counter;
         diceNumbers.push(counter);
       }
 
-      logPastResults.push(total)
+      logPastResults.push(total);
       this.setState({ diceNumbers, total, logPastResults });
-    }else {
+    } else {
       let diceNumbers = [];
       let total = 0;
-      let logPastResults = this.state.logPastResults
+      let logPastResults = this.state.logPastResults;
       let diceType = this.state.diceTypeSelected;
       let diceModifier = parseInt(this.state.diceModifier);
       for (let i = 0; i < diceCount; i++) {
@@ -92,7 +109,7 @@ class Game extends Component {
         diceNumbers.push(counter);
       }
 
-      logPastResults.push(total)
+      logPastResults.push(total);
       this.setState({ diceNumbers, total, logPastResults });
     }
   };
@@ -104,9 +121,9 @@ class Game extends Component {
 
   getDiceRoll = () => {
     this.startAudio();
-    let selectedDice = this.state.selectedDice
-    if(selectedDice.length > 0) {
-    this.setDiceNumbers(this.state.selectedDice);
+    let selectedDice = this.state.selectedDice;
+    if (selectedDice.length > 0) {
+      this.setDiceNumbers(this.state.selectedDice);
     } else {
       this.setDiceNumbers(this.state.diceCount);
     }
@@ -163,19 +180,19 @@ class Game extends Component {
   addDice = () => {
     let selectedDice = this.state.selectedDice;
     let diceNumbers = this.state.diceNumbers;
-    let diceCount= this.state.diceCount
+    let diceCount = this.state.diceCount;
     let diceType = this.state.diceTypeSelected;
 
-    for(let i = 0; i < diceCount; i++) {
-      selectedDice.push(diceType)
-      diceNumbers.push(1)
+    for (let i = 0; i < diceCount; i++) {
+      selectedDice.push(diceType);
+      diceNumbers.push(1);
     }
-    this.setState({selectedDice})
-  }
+    this.setState({ selectedDice });
+  };
 
   refreshDice = () => {
     let selectedDice = [];
-    this.setState({selectedDice})
+    this.setState({ selectedDice });
   };
 
   render() {
@@ -187,38 +204,43 @@ class Game extends Component {
       logPastResults,
       total,
       diceType,
-      selectedDice,
+      selectedDice
     } = this.state;
 
     return (
       <React.Fragment>
-        <DiceResults logPastResults={logPastResults}/>
-        <DiceContainer total={total} diceCount={diceCount} selectedDice={selectedDice} diceNumber={diceNumbers} />
+        <DiceResults logPastResults={logPastResults} saveGame={this.saveGame} clearGame={this.clearGame} />
+        <DiceContainer
+          total={total}
+          diceCount={diceCount}
+          selectedDice={selectedDice}
+          diceNumber={diceNumbers}
+        />
         <MuteButton mute={mute} setMute={this.setMute} />
-        <div className="container-fluid w-25  DiceForm">
         <div className="form-group mt-2 DiceFormInput">
-              <label htmlFor="selectedDice">Selected Dice:</label>
-              <div id="selectedDice">
-                {selectedDice.map((dice) => (
-                  <span>D{dice}</span>
-                ))}
-              </div>
+            <label htmlFor="selectedDice">Selected Dice:</label>
+            <div className="SelectedDiceContainer" id="selectedDice">
+              {selectedDice.map((dice) => (
+                <span className="SelectedDiceContainer-item">D{dice}</span>
+              ))}
             </div>
-            <div className="form-group mt-2 DiceFormInput">
-              <label htmlFor="diceCount">Dice Type:</label>
-              <select
-                className="mt-4 form-control m-auto mb-0"
-                id="diceStyle"
-                onChange={this.getDiceType}
-              >
-                {diceType.map((type) => (
-                  <option key={type} value={type}>
-                    {type}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="form-group mt-2 DiceFormInput">
+          </div>
+        <div className="container-fluid w-25  DiceForm">
+          <div className="form-group mt-2 DiceFormInput">
+            <label htmlFor="diceCount">Dice Type:</label>
+            <select
+              className="mt-4 form-control m-auto mb-0"
+              id="diceStyle"
+              onChange={this.getDiceType}
+            >
+              {diceType.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="form-group mt-2 DiceFormInput">
             <label htmlFor="diceCount">Dice Count:</label>
             <select
               className="mt-4 form-control m-auto mb-0"
@@ -231,8 +253,8 @@ class Game extends Component {
                 </option>
               ))}
             </select>
-            </div>
-            <div className="form-group mt-2 DiceFormInput">
+          </div>
+          <div className="form-group mt-2 DiceFormInput">
             <label htmlFor="diceModifier">Modifier:</label>
             <input
               placeholder="0"
@@ -241,7 +263,7 @@ class Game extends Component {
               className="mt-4 form-control m-auto mo-0"
               id="diceModifier"
             />
-            </div>
+          </div>
           {/*           <div className="form-group mt-2">
             <label htmlFor="diceCount">Dice Style:</label>
             <select
@@ -257,7 +279,12 @@ class Game extends Component {
             </select>
           </div> */}
         </div>
-        <Buttons selectedDice={selectedDice} getDiceRoll={this.getDiceRoll} refreshDice={this.refreshDice} addDice={this.addDice}/>
+        <Buttons
+          selectedDice={selectedDice}
+          getDiceRoll={this.getDiceRoll}
+          refreshDice={this.refreshDice}
+          addDice={this.addDice}
+        />
       </React.Fragment>
     );
   }

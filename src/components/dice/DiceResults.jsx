@@ -3,7 +3,7 @@ import React from "react";
 // all data via props no helper methods and such so this should be a stateless functional component - function that returns a react element - need props as a parametter
 
 //stateless functional component pass count of dice and number on dice
-const DiceResults = ({logPastResults}) => {
+const DiceResults = ({logPastResults, saveGame, clearGame}) => {
   let results = []
   for (var i = 0; i < logPastResults.length; i++) {
       results.push(
@@ -14,6 +14,7 @@ const DiceResults = ({logPastResults}) => {
       );
   }
   return (
+    <React.Fragment>
     <div className="ResultsContainer">
     <table className="table">
       <thead>
@@ -26,7 +27,12 @@ const DiceResults = ({logPastResults}) => {
         {results}
       </tbody>
     </table>
+    <div className="ResultsContainer-footer">
+    <button className="btn btn-secondary" onClick={saveGame}>Save Game</button>
+    <button className="btn btn-secondary" onClick={clearGame}>Clear Game</button>
     </div>
+    </div>
+    </React.Fragment>
   )
 };
 
