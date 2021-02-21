@@ -153,8 +153,7 @@ class Game extends Component {
 
     return (
       <React.Fragment>
-        <h1>{total}</h1>
-        <DiceContainer diceCount={diceCount} diceNumber={diceNumbers} />
+        <DiceContainer total={total} diceCount={diceCount} diceNumber={diceNumbers} />
         <DiceResults logPastResults={logPastResults}/>
         <MuteButton mute={mute} setMute={this.setMute} />
         <div className="container-fluid w-25">

@@ -41,6 +41,25 @@
   overflow-x: scroll;
 }
 
+.DiceImage {
+  width: 100%;
+}
+
+.DiceContainer-total {
+  position: absolute;
+  top: 31%;
+  left: 38%;
+  font-size: 37px;
+}
+
+.DiceContainer, .diceImageTotal {
+  width: 177px;
+  height: 177px;
+  position: relative;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
 
 .ResultsContainer > table > thead > tr > th {
   color: white;
