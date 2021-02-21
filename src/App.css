@@ -41,8 +41,15 @@
   overflow-x: scroll;
 }
 
-.ResultsContainer-items {
+
+.ResultsContainer > table > thead > tr > th {
+  color: white;
   font-size: 20px;
+}
+
+.ResultsContainer > table > tbody > tr > td,  .ResultsContainer > table > tbody > tr > th{
+  font-size: 20px;
+  color: white;
 }
 
 

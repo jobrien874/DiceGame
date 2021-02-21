@@ -6,13 +6,26 @@ import React from "react";
 const DiceResults = ({logPastResults}) => {
   let results = []
   for (var i = 0; i < logPastResults.length; i++) {
-      results.push(<li className="ResultsContainer-item">{logPastResults[i]} Total Score</li>);
+      results.push(
+      <tr>
+      <th scope="row" className="">{i + 1}</th>
+      <td className="ResultsContainer-item">{logPastResults[i]}</td>
+      </tr>
+      );
   }
   return (
-    <div className="ResultsContainer container-fluid">
-      <ol className="ResultsContainer-items">
+    <div className="ResultsContainer">
+    <table className="table">
+      <thead>
+      <tr>
+        <th scope="col">Roll</th>
+        <th scope="col">Total</th>
+      </tr>
+      </thead>
+      <tbody className="ResultsContainer-items">
         {results}
-      </ol>
+      </tbody>
+    </table>
     </div>
   )
 };

@@ -15,7 +15,6 @@ const DiceContainer = ({ diceCount, diceNumber }) => {
       catch(err){
           src = false;
       }
-      console.log(src)
       rows.push(<Dice key={i} diceNumber={diceNumber[i]} diceImage={src} />);
   }
   return (
