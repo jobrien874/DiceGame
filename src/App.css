@@ -130,6 +130,16 @@
   color: #61dafb;
 }
 
+.DiceSelectionBox{
+  font-size: 18px;
+  width: 100%;
+  border: 1px solid white;
+  max-width: 300px;
+  border-radius: 5px;
+  padding: 10px;
+  min-height: 49px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

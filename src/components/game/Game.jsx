@@ -4,6 +4,7 @@ import DiceResults from "../dice/DiceResults";
 import MuteButton from "../audio/MuteButton";
 import Buttons from "../buttons/Buttons";
 // import PropTypes from 'prop-types';
+import DiceSelectionBox from '../dice/DiceSelectionBox';
 
 // Class Component
 
@@ -14,6 +15,7 @@ class Game extends Component {
     total: 1,
     diceModifier: 0,
     selectedDice: [],
+    selectedDiceBreakdown: {},
     logPastResults: [],
     mute: false,
     maxDiceAmount: [
@@ -129,6 +131,49 @@ class Game extends Component {
     }
   };
 
+  breakdownSelectedDice = () => {
+    let selectedDice = this.state.selectedDice;
+    let selectedDiceBreakdown = {D4:0, D6:0, D8:0, D10:0, D12:0, D20:0, D100:0};
+    console.log(selectedDice)
+    selectedDice.forEach(dice => {
+      switch (dice) {
+        case 6:
+          selectedDiceBreakdown.D6 += 1
+          break;
+
+        case 4:
+          selectedDiceBreakdown.D4 += 1
+          break;
+
+        case 8:
+          selectedDiceBreakdown.D8 += 1
+          break;
+
+        case 10:
+          selectedDiceBreakdown.D10 += 1
+          break;
+
+        case 12:
+          selectedDiceBreakdown.D12 += 1
+          break;
+
+        case 20:
+          selectedDiceBreakdown.D20 += 1
+          break;
+
+        case 100:
+          selectedDiceBreakdown.D100 += 1
+          break;
+
+        default:
+          selectedDiceBreakdown.D6 += 1
+          break;
+      }
+    });
+    console.log(selectedDiceBreakdown)
+    this.setState({selectedDiceBreakdown})
+  }
+
   getDiceNumber = (e) => {
     let diceCount = e.target.value;
     this.setState({ diceCount });
@@ -188,6 +233,7 @@ class Game extends Component {
       diceNumbers.push(1);
     }
     this.setState({ selectedDice });
+    this.breakdownSelectedDice();
   };
 
   refreshDice = () => {
@@ -204,7 +250,8 @@ class Game extends Component {
       logPastResults,
       total,
       diceType,
-      selectedDice
+      selectedDice,
+      selectedDiceBreakdown
     } = this.state;
 
     return (
@@ -217,14 +264,7 @@ class Game extends Component {
           diceNumber={diceNumbers}
         />
         <MuteButton mute={mute} setMute={this.setMute} />
-        <div className="form-group mt-2 DiceFormInput">
-            <label htmlFor="selectedDice">Selected Dice:</label>
-            <div className="SelectedDiceContainer" id="selectedDice">
-              {selectedDice.map((dice) => (
-                <span className="SelectedDiceContainer-item">D{dice}</span>
-              ))}
-            </div>
-          </div>
+        <DiceSelectionBox selectedDiceBreakdown={selectedDiceBreakdown}/>
         <div className="container-fluid w-25  DiceForm">
           <div className="form-group mt-2 DiceFormInput">
             <label htmlFor="diceCount">Dice Type:</label>
