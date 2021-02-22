@@ -38,6 +38,9 @@
   left: 0;
   width: 300px;
   height: 400px;
+}
+
+.ResultsContainer-container {
   overflow-x: scroll;
 }
 
@@ -52,7 +55,7 @@
 
 .ResultsContainer-footer {
   position: absolute;
-  bottom: 0;
+  bottom: -60px;
   height: 50px;
   width: 100%;
 }
@@ -99,13 +102,13 @@
   margin-bottom: 20px;
 }
 
-.ResultsContainer > table > thead > tr > th {
+.ResultsContainer-container > table > thead > tr > th {
   color: white;
   font-size: 20px;
 }
 
-.ResultsContainer > table > tbody > tr > td,
-.ResultsContainer > table > tbody > tr > th {
+.ResultsContainer-container > table > tbody > tr > td,
+.ResultsContainer-container > table > tbody > tr > th {
   font-size: 20px;
   color: white;
 }
