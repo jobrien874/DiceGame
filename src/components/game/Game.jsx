@@ -241,7 +241,8 @@ class Game extends Component {
 
   refreshDice = () => {
     let selectedDice = [];
-    this.setState({ selectedDice });
+    let selectedDiceBreakdown = {};
+    this.setState({ selectedDice, selectedDiceBreakdown });
   };
 
   render() {
