@@ -84,7 +84,8 @@ class Game extends Component {
     this.setState({ mute });
   };
 
-  setDiceNumbers = (diceCount) => {
+
+  setDiceNumbers = (diceCount, diceHistoryChange) => {
     if (diceCount.constructor === Array) {
       let diceNumbers = [];
       let total = 0;
@@ -96,8 +97,9 @@ class Game extends Component {
         total += counter;
         diceNumbers.push(counter);
       }
-
+      if(diceHistoryChange) {
       logPastResults.push(total);
+      }
       this.setState({ diceNumbers, total, logPastResults });
     } else {
       let diceNumbers = [];
@@ -110,8 +112,9 @@ class Game extends Component {
         total += counter;
         diceNumbers.push(counter);
       }
-
+      if(diceHistoryChange) {
       logPastResults.push(total);
+      }
       this.setState({ diceNumbers, total, logPastResults });
     }
   };
@@ -125,9 +128,9 @@ class Game extends Component {
     this.startAudio();
     let selectedDice = this.state.selectedDice;
     if (selectedDice.length > 0) {
-      this.setDiceNumbers(this.state.selectedDice);
+      this.setDiceNumbers(this.state.selectedDice, true);
     } else {
-      this.setDiceNumbers(this.state.diceCount);
+      this.setDiceNumbers(this.state.diceCount, true);
     }
   };
 
@@ -177,7 +180,7 @@ class Game extends Component {
   getDiceNumber = (e) => {
     let diceCount = e.target.value;
     this.setState({ diceCount });
-    this.setDiceNumbers(diceCount);
+    this.setDiceNumbers(diceCount, false);
   };
 
   getDiceStyle = (e) => {
