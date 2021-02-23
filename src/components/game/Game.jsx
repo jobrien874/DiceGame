@@ -17,6 +17,7 @@ class Game extends Component {
     selectedDice: [],
     selectedDiceBreakdown: {},
     logPastResults: [],
+    logPastResultsBreakdown: {},
     mute: false,
     maxDiceAmount: [
       1,
@@ -86,11 +87,14 @@ class Game extends Component {
 
 
   setDiceNumbers = (diceCount, diceHistoryChange) => {
+    let diceModifier = parseInt(this.state.diceModifier);
+      if(isNaN(diceModifier)){
+        diceModifier = 0;
+      }
     if (diceCount.constructor === Array) {
       let diceNumbers = [];
       let total = 0;
       let logPastResults = this.state.logPastResults;
-      let diceModifier = parseInt(this.state.diceModifier);
       for (let i = 0; i < diceCount.length; i++) {
         let counter =
           Math.floor(Math.random() * diceCount[i]) + 1;
@@ -130,6 +134,7 @@ class Game extends Component {
     this.startAudio();
     let selectedDice = this.state.selectedDice;
     if (selectedDice.length > 0) {
+      this.breakdownSelectedDice()
       this.setDiceNumbers(this.state.selectedDice, true);
     } else {
       this.setDiceNumbers(this.state.diceCount, true);
@@ -138,7 +143,8 @@ class Game extends Component {
 
   breakdownSelectedDice = () => {
     let selectedDice = this.state.selectedDice;
-    let selectedDiceBreakdown = {D4:0, D6:0, D8:0, D10:0, D12:0, D20:0, D100:0};
+    let modifier = this.state.diceModifier;
+    let selectedDiceBreakdown = {D4:0, D6:0, D8:0, D10:0, D12:0, D20:0, D100:0, Modifier:modifier};
     console.log(selectedDice)
     selectedDice.forEach(dice => {
       switch (dice) {
