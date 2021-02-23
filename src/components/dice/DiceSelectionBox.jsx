@@ -10,9 +10,9 @@ const DiceSelectionBox = ({ selectedDiceBreakdown }) => {
         selectionText += `${key}x${value} `
     }
   }
-  return (<div className="DiceSelectionBox">{selectionText}</div>);
+  return (<React.Fragment><div className="DiceSelectionBox-Selected">Selected Dice</div><div className="DiceSelectionBox">{selectionText}</div></React.Fragment>);
  } else {
-     return (<div className="DiceSelectionBox"></div>);
+     return (<React.Fragment><div className="DiceSelectionBox-Selected">Selected Dice</div><div className="DiceSelectionBox"></div></React.Fragment>);
  }
 };
 
