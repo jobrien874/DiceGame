@@ -93,10 +93,11 @@ class Game extends Component {
       let diceModifier = parseInt(this.state.diceModifier);
       for (let i = 0; i < diceCount.length; i++) {
         let counter =
-          Math.floor(Math.random() * diceCount[i]) + 1 + diceModifier;
+          Math.floor(Math.random() * diceCount[i]) + 1;
         total += counter;
         diceNumbers.push(counter);
       }
+      total+=diceModifier
       if(diceHistoryChange) {
       logPastResults.push(total);
       }
@@ -108,10 +109,11 @@ class Game extends Component {
       let diceType = this.state.diceTypeSelected;
       let diceModifier = parseInt(this.state.diceModifier);
       for (let i = 0; i < diceCount; i++) {
-        let counter = Math.floor(Math.random() * diceType) + 1 + diceModifier;
+        let counter = Math.floor(Math.random() * diceType) + 1;
         total += counter;
         diceNumbers.push(counter);
       }
+      total+=diceModifier
       if(diceHistoryChange) {
       logPastResults.push(total);
       }
