@@ -179,8 +179,11 @@ class Game extends Component {
 
   getDiceNumber = (e) => {
     let diceCount = e.target.value;
+    let selectedDice = this.state.selectedDice;
     this.setState({ diceCount });
+    if(selectedDice.length === 0){
     this.setDiceNumbers(diceCount, false);
+    }
   };
 
   getDiceStyle = (e) => {
