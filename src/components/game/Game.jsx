@@ -142,7 +142,9 @@ class Game extends Component {
       console.log(logPastResultsBreakdown)
     } else {
       this.setDiceNumbers(this.state.diceCount, true);
+      logPastResultsBreakdown.push('Freeroll')
     }
+    this.setState({logPastResultsBreakdown})
   };
 
   makeSelectionBoxString = (selectedDiceBreakdown) => {
