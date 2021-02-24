@@ -17,7 +17,7 @@ class Game extends Component {
     selectedDice: [],
     selectedDiceBreakdown: {},
     logPastResults: [],
-    logPastResultsBreakdown: {},
+    logPastResultsBreakdown: [],
     mute: false,
     maxDiceAmount: [
       1,
@@ -67,6 +67,11 @@ class Game extends Component {
       let audio = new Audio("/roll.mp3");
       audio.play();
     }
+  };
+
+
+  diceBreakdownString = () => {
+
   };
 
   saveGame = () => {
@@ -145,7 +150,6 @@ class Game extends Component {
     let selectedDice = this.state.selectedDice;
     let modifier = this.state.diceModifier;
     let selectedDiceBreakdown = {D4:0, D6:0, D8:0, D10:0, D12:0, D20:0, D100:0, Modifier:modifier};
-    console.log(selectedDice)
     selectedDice.forEach(dice => {
       switch (dice) {
         case 6:
@@ -181,7 +185,6 @@ class Game extends Component {
           break;
       }
     });
-    console.log(selectedDiceBreakdown)
     this.setState({selectedDiceBreakdown})
   }
 
