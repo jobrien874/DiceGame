@@ -16,6 +16,7 @@ class Game extends Component {
     diceModifier: 0,
     selectedDice: [],
     selectedDiceBreakdown: {},
+    selectionText: "",
     logPastResults: [],
     logPastResultsBreakdown: [],
     mute: false,
@@ -146,6 +147,17 @@ class Game extends Component {
     }
   };
 
+  makeSelectionBoxString = (selectedDiceBreakdown) => {
+    let selection = selectedDiceBreakdown;
+    let selectionText = '';
+    for (const [key, value] of Object.entries(selection)) {
+      if (value > 0) {
+        selectionText += `${key}x${value} `;
+      }
+    }
+    this.setState({selectionText})
+  }
+
   breakdownSelectedDice = () => {
     let selectedDice = this.state.selectedDice;
     let modifier = this.state.diceModifier;
@@ -186,6 +198,10 @@ class Game extends Component {
       }
     });
     this.setState({selectedDiceBreakdown})
+
+    if(Object.entries(selectedDiceBreakdown).length > 0) {
+      this.makeSelectionBoxString(selectedDiceBreakdown)
+    }
   }
 
   getDiceNumber = (e) => {
@@ -269,7 +285,8 @@ class Game extends Component {
       total,
       diceType,
       selectedDice,
-      selectedDiceBreakdown
+      selectedDiceBreakdown,
+      selectionText
     } = this.state;
 
     return (
@@ -282,7 +299,7 @@ class Game extends Component {
           diceNumber={diceNumbers}
         />
         <MuteButton mute={mute} setMute={this.setMute} />
-        <DiceSelectionBox selectedDiceBreakdown={selectedDiceBreakdown}/>
+        <DiceSelectionBox selectionText={selectionText} selectedDiceBreakdown={selectedDiceBreakdown}/>
         <div className="container-fluid w-25  DiceForm">
           <div className="form-group mt-2 DiceFormInput">
             <label htmlFor="diceCount">Dice Type:</label>

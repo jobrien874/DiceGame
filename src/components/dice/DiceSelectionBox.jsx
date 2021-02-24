@@ -1,7 +1,7 @@
 import React from "react";
 
-const DiceSelectionBox = ({ selectedDiceBreakdown }) => {
-  const makeSelectionBoxString = () => {
+const DiceSelectionBox = ({ selectionText, selectedDiceBreakdown }) => {
+/*   const makeSelectionBoxString = () => {
     let selection = selectedDiceBreakdown;
     let selectionText = "";
     for (const [key, value] of Object.entries(selection)) {
@@ -10,10 +10,9 @@ const DiceSelectionBox = ({ selectedDiceBreakdown }) => {
       }
     }
     return selectionText;
-  }
+  } */
 
   if (Object.entries(selectedDiceBreakdown).length > 0) {
-    let selectionText = makeSelectionBoxString()
     return (
       <React.Fragment>
         <div className="DiceSelectionBox-Selected">Selected Dice</div>
