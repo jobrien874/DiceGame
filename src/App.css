@@ -30,6 +30,10 @@
   font-size: 18px;
 }
 
+.whiteNavLink {
+  color: white;
+}
+
 .MuteButton {
   position: absolute;
   top: 20px;
