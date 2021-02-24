@@ -4,7 +4,7 @@ import DiceResults from "../dice/DiceResults";
 import MuteButton from "../audio/MuteButton";
 import Buttons from "../buttons/Buttons";
 // import PropTypes from 'prop-types';
-import DiceSelectionBox from '../dice/DiceSelectionBox';
+import DiceSelectionBox from "../dice/DiceSelectionBox";
 
 // Class Component
 
@@ -58,7 +58,7 @@ class Game extends Component {
     let oldState = window.localStorage.getItem("oldState");
     if (oldState) {
       let olderState = JSON.parse(oldState);
-      this.setState(olderState)
+      this.setState(olderState);
     }
   }
 
@@ -70,10 +70,7 @@ class Game extends Component {
     }
   };
 
-
-  diceBreakdownString = () => {
-
-  };
+  diceBreakdownString = () => {};
 
   saveGame = () => {
     // save game
@@ -91,25 +88,23 @@ class Game extends Component {
     this.setState({ mute });
   };
 
-
   setDiceNumbers = (diceCount, diceHistoryChange) => {
     let diceModifier = parseInt(this.state.diceModifier);
-      if(isNaN(diceModifier)){
-        diceModifier = 0;
-      }
+    if (isNaN(diceModifier)) {
+      diceModifier = 0;
+    }
     if (diceCount.constructor === Array) {
       let diceNumbers = [];
       let total = 0;
       let logPastResults = this.state.logPastResults;
       for (let i = 0; i < diceCount.length; i++) {
-        let counter =
-          Math.floor(Math.random() * diceCount[i]) + 1;
+        let counter = Math.floor(Math.random() * diceCount[i]) + 1;
         total += counter;
         diceNumbers.push(counter);
       }
-      total+=diceModifier
-      if(diceHistoryChange) {
-      logPastResults.push(total);
+      total += diceModifier;
+      if (diceHistoryChange) {
+        logPastResults.push(total);
       }
       this.setState({ diceNumbers, total, logPastResults });
     } else {
@@ -123,9 +118,9 @@ class Game extends Component {
         total += counter;
         diceNumbers.push(counter);
       }
-      total+=diceModifier
-      if(diceHistoryChange) {
-      logPastResults.push(total);
+      total += diceModifier;
+      if (diceHistoryChange) {
+        logPastResults.push(total);
       }
       this.setState({ diceNumbers, total, logPastResults });
     }
@@ -139,9 +134,12 @@ class Game extends Component {
   getDiceRoll = () => {
     this.startAudio();
     let selectedDice = this.state.selectedDice;
+    let logPastResultsBreakdown = this.state.logPastResultsBreakdown;
     if (selectedDice.length > 0) {
-      this.breakdownSelectedDice()
+      this.breakdownSelectedDice();
       this.setDiceNumbers(this.state.selectedDice, true);
+      logPastResultsBreakdown.push(this.state.selectionText)
+      console.log(logPastResultsBreakdown)
     } else {
       this.setDiceNumbers(this.state.diceCount, true);
     }
@@ -149,67 +147,76 @@ class Game extends Component {
 
   makeSelectionBoxString = (selectedDiceBreakdown) => {
     let selection = selectedDiceBreakdown;
-    let selectionText = '';
+    let selectionText = "";
     for (const [key, value] of Object.entries(selection)) {
       if (value > 0) {
         selectionText += `${key}x${value} `;
       }
     }
-    this.setState({selectionText})
-  }
+    this.setState({ selectionText});
+  };
 
   breakdownSelectedDice = () => {
     let selectedDice = this.state.selectedDice;
     let modifier = this.state.diceModifier;
-    let selectedDiceBreakdown = {D4:0, D6:0, D8:0, D10:0, D12:0, D20:0, D100:0, Modifier:modifier};
-    selectedDice.forEach(dice => {
+    let selectedDiceBreakdown = {
+      D4: 0,
+      D6: 0,
+      D8: 0,
+      D10: 0,
+      D12: 0,
+      D20: 0,
+      D100: 0,
+      Modifier: modifier,
+    };
+    selectedDice.forEach((dice) => {
       switch (dice) {
         case 6:
-          selectedDiceBreakdown.D6 += 1
+          selectedDiceBreakdown.D6 += 1;
           break;
 
         case 4:
-          selectedDiceBreakdown.D4 += 1
+          selectedDiceBreakdown.D4 += 1;
           break;
 
         case 8:
-          selectedDiceBreakdown.D8 += 1
+          selectedDiceBreakdown.D8 += 1;
           break;
 
         case 10:
-          selectedDiceBreakdown.D10 += 1
+          selectedDiceBreakdown.D10 += 1;
           break;
 
         case 12:
-          selectedDiceBreakdown.D12 += 1
+          selectedDiceBreakdown.D12 += 1;
           break;
 
         case 20:
-          selectedDiceBreakdown.D20 += 1
+          selectedDiceBreakdown.D20 += 1;
           break;
 
         case 100:
-          selectedDiceBreakdown.D100 += 1
+          selectedDiceBreakdown.D100 += 1;
           break;
 
         default:
-          selectedDiceBreakdown.D6 += 1
+          selectedDiceBreakdown.D6 += 1;
           break;
       }
     });
-    this.setState({selectedDiceBreakdown})
+    this.setState({ selectedDiceBreakdown });
 
-    if(Object.entries(selectedDiceBreakdown).length > 0) {
-      this.makeSelectionBoxString(selectedDiceBreakdown)
+    if (Object.entries(selectedDiceBreakdown).length > 0) {
+      this.makeSelectionBoxString(selectedDiceBreakdown);
     }
-  }
+  };
 
   getDiceNumber = (e) => {
     let diceCount = e.target.value;
     let selectedDice = this.state.selectedDice;
     this.setState({ diceCount });
-    if(selectedDice.length === 0){
-    this.setDiceNumbers(diceCount, false);
+    if (selectedDice.length === 0) {
+      this.setDiceNumbers(diceCount, false);
     }
   };
 
@@ -284,14 +291,20 @@ class Game extends Component {
       logPastResults,
       total,
       diceType,
+      logPastResultsBreakdown,
       selectedDice,
       selectedDiceBreakdown,
-      selectionText
+      selectionText,
     } = this.state;
 
     return (
       <React.Fragment>
-        <DiceResults logPastResults={logPastResults} saveGame={this.saveGame} clearGame={this.clearGame} />
+        <DiceResults
+          logPastResults={logPastResults}
+          logPastResultsBreakdown={logPastResultsBreakdown}
+          saveGame={this.saveGame}
+          clearGame={this.clearGame}
+        />
         <DiceContainer
           total={total}
           diceCount={diceCount}
@@ -299,7 +312,10 @@ class Game extends Component {
           diceNumber={diceNumbers}
         />
         <MuteButton mute={mute} setMute={this.setMute} />
-        <DiceSelectionBox selectionText={selectionText} selectedDiceBreakdown={selectedDiceBreakdown}/>
+        <DiceSelectionBox
+          selectionText={selectionText}
+          selectedDiceBreakdown={selectedDiceBreakdown}
+        />
         <div className="container-fluid w-25  DiceForm">
           <div className="form-group mt-2 DiceFormInput">
             <label htmlFor="diceCount">Dice Type:</label>
