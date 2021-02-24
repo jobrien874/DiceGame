@@ -138,29 +138,40 @@ class Game extends Component {
     if (selectedDice.length > 0) {
       this.breakdownSelectedDice();
       this.setDiceNumbers(this.state.selectedDice, true);
-      logPastResultsBreakdown.push(this.state.selectionText)
-      console.log(logPastResultsBreakdown)
+      logPastResultsBreakdown.push(this.state.selectionText);
+      console.log(logPastResultsBreakdown);
     } else {
       this.setDiceNumbers(this.state.diceCount, true);
-      logPastResultsBreakdown.push('Freeroll')
+      logPastResultsBreakdown.push("Freeroll");
     }
-    this.setState({logPastResultsBreakdown})
+    this.setState({ logPastResultsBreakdown });
   };
 
   makeSelectionBoxString = (selectedDiceBreakdown) => {
     let selection = selectedDiceBreakdown;
     let selectionText = "";
     for (const [key, value] of Object.entries(selection)) {
-      if (value > 0) {
+      if (value > 0 && key !== "+") {
         selectionText += `${key}x${value} `;
+      } else if (value < 0 || key === "+") {
+        selectionText += `${key}${value}`;
       }
     }
-    this.setState({ selectionText});
+    this.setState({ selectionText });
   };
+
+  makeModifierText = (modifier) => {
+    if(Math.sign(modifier) === -1){
+      return " ";
+    } else {
+      return "+";
+    }
+  }
 
   breakdownSelectedDice = () => {
     let selectedDice = this.state.selectedDice;
     let modifier = this.state.diceModifier;
+    let modifierText = this.makeModifierText(modifier)
     let selectedDiceBreakdown = {
       D4: 0,
       D6: 0,
@@ -169,8 +180,11 @@ class Game extends Component {
       D12: 0,
       D20: 0,
       D100: 0,
-      Modifier: modifier,
+      [modifierText]: parseInt(modifier),
     };
+
+    console.log(modifierText, modifier)
+    console.log(selectedDiceBreakdown)
     selectedDice.forEach((dice) => {
       switch (dice) {
         case 6:
@@ -208,7 +222,7 @@ class Game extends Component {
     });
     this.setState({ selectedDiceBreakdown });
 
-    if (Object.entries(selectedDiceBreakdown).length > 0) {
+    if (Object.entries(selectedDiceBreakdown).length > 0 || Object.entries(selectedDiceBreakdown).length < 0) {
       this.makeSelectionBoxString(selectedDiceBreakdown);
     }
   };
