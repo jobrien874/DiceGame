@@ -154,7 +154,9 @@ class Game extends Component {
       if (value > 0 && key !== "+") {
         selectionText += `${key}x${value} `;
       } else if (value < 0 || key === "+") {
+        if(value !== 0) {
         selectionText += `${key}${value}`;
+        }
       }
     }
     this.setState({ selectionText });
@@ -336,7 +338,7 @@ class Game extends Component {
           <div className="form-group mt-2 DiceFormInput">
             <label htmlFor="diceCount">Dice Type:</label>
             <select
-              className="mt-4 form-control m-auto mb-0"
+              className="mt-2 form-control m-auto mb-0"
               id="diceStyle"
               onChange={this.getDiceType}
             >
@@ -350,7 +352,7 @@ class Game extends Component {
           <div className="form-group mt-2 DiceFormInput">
             <label htmlFor="diceCount">Dice Count:</label>
             <select
-              className="mt-4 form-control m-auto mb-0"
+              className="mt-2 form-control m-auto mb-0"
               id="diceCount"
               onChange={this.getDiceNumber}
             >
@@ -367,7 +369,7 @@ class Game extends Component {
               placeholder="0"
               type="number"
               onChange={this.setDiceModifier}
-              className="mt-4 form-control m-auto mo-0"
+              className="mt-2 form-control m-auto mo-0"
               id="diceModifier"
             />
           </div>

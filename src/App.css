@@ -13,6 +13,11 @@
   }
 }
 
+
+.DiceFormInput label {
+  font-size: 20px;
+}
+
 .App-body {
   background-color: #282c34;
   min-height: 90vh;
