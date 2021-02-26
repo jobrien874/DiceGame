@@ -31,9 +31,12 @@ const DiceContainer = ({ diceCount, diceNumber, total, selectedDice }) => {
   }
 }
   return (
-    <div className="container-fluid DiceBoard">
-      {rows}
-    </div>
+    <React.Fragment>
+      <div className="ResultsInfo">Add different Dice with the Add Dice Button (e.g. D6, D10 X2) or just Freeroll any number of one Dice.</div>
+      <div className="container-fluid DiceBoard">
+        {rows}
+      </div>
+    </React.Fragment>
   )
 };
 

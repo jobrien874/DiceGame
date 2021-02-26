@@ -7,6 +7,14 @@
   pointer-events: none;
 }
 
+.ResultsInfo {
+  font-size: 15px;
+  max-width: 400px;
+  margin-bottom: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
