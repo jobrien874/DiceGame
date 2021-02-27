@@ -6,9 +6,9 @@ const Header = () => {
         <header>
         <div className="navbar navbar-dark bg-dark shadow-sm">
           <div className="container d-flex justify-content-between">
-            <a href="/" className="navbar-brand d-flex align-items-center">
+            <Link to="/" className="navbar-brand d-flex align-items-center">
               <strong>DiceRoll</strong>
-            </a>
+            </Link>
             <div className="justify-content-between">
             <Link className="whiteNavLink" to="/about">About</Link>
             <a className="whiteNavLink" href="https://trello.com/b/MwnwgDvI/dice-util-workboard">
