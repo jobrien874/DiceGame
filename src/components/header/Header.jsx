@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const Header = () => {
     return (
@@ -10,9 +10,7 @@ const Header = () => {
               <strong>DiceRoll</strong>
             </a>
             <div className="justify-content-between">
-            <Link className="whiteNavLink" to="/about">
-              About
-            </Link>
+            <Link className="whiteNavLink" to="/about">About</Link>
             <a className="whiteNavLink" href="https://trello.com/b/MwnwgDvI/dice-util-workboard">
               Roadmap
             </a>
