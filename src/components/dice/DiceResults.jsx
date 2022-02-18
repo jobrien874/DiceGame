@@ -32,7 +32,7 @@ const DiceResults = ({logPastResults, saveGame, clearGame, logPastResultsBreakdo
     </table>
     </div>
     <div className="ResultsContainer-footer">
-    <button className="btn btn-secondary" onClick={saveGame}>Save Game</button>
+    {/* <button className="btn btn-secondary" onClick={saveGame}>Save Game</button> */}
     <button className="btn btn-secondary" onClick={clearGame}>Clear Game</button>
     </div>
     </div>

@@ -56,15 +56,14 @@ const GameV2 = () => {
 
   const setDiceNumbersFunc = (diceCount, diceHistoryChange) => {
     let diceModifierInt = parseInt(diceModifier);
-    let diceNumbersCurrent = [...diceNumbers];
-    let total = 0;
-    let logPastResultsArr = [...logPastResults];
-    if (isNaN(diceModifier)) {
+    if (isNaN(diceModifierInt)) {
       diceModifierInt = 0;
     }
     if (diceCount.constructor === Array) {
+      let diceNumbersCurrent = [];
+      let total = 0;
+      let logPastResultsArr = logPastResults;
       for (let i = 0; i < diceCount.length; i++) {
-        console.log(diceCount)
         let counter = Math.floor(Math.random() * diceCount[i]) + 1;
         total += counter;
         diceNumbersCurrent.push(counter);
@@ -77,6 +76,11 @@ const GameV2 = () => {
       setDiceNumbers(diceNumbersCurrent);
       setTotal(total);
     } else {
+      let diceNumbersCurrent = [];
+      let total = 0;
+      let logPastResultsArr = logPastResults;
+      let diceType = diceTypeSelected;
+      let diceModifierInt = parseInt(diceModifier);
       for (let i = 0; i < diceCount; i++) {
         let counter = Math.floor(Math.random() * diceType) + 1;
         total += counter;
@@ -91,7 +95,6 @@ const GameV2 = () => {
       setTotal(total);
     }
   };
-
 
   const getDiceType = (e) => {
     let diceType = e.target.value;
@@ -146,7 +149,6 @@ const GameV2 = () => {
       selDice.push(diceTypeSelected);
       diceNumbersCurrent.push(1);
     }
-    console.log(selDice, 'selected');
     setSelectedDice(selDice);
     breakdownSelectedDice(selDice);
   };
@@ -172,8 +174,7 @@ const GameV2 = () => {
 
   const breakdownSelectedDice = (selDiceProp) => {
     let selDice = selDiceProp ? selDiceProp : selectedDice;
-    let modifier = diceModifier;
-    let modifierText = makeModifierText(modifier)
+    let modifierText = makeModifierText(diceModifier)
     let selectedDiceBreakdown = {
       D4: 0,
       D6: 0,
@@ -182,7 +183,7 @@ const GameV2 = () => {
       D12: 0,
       D20: 0,
       D100: 0,
-      [modifierText]: parseInt(modifier),
+      [modifierText]: parseInt(diceModifier),
     };
 
     selDice.forEach((dice) => {
@@ -229,7 +230,7 @@ const GameV2 = () => {
 
   const getDiceRoll = () => {
     startAudio();
-    let results = [];
+    let results = logPastResultsBreakdown;
     if (selectedDice.length > 0) {
       breakdownSelectedDice();
       setDiceNumbersFunc(selectedDice, true);
@@ -315,7 +316,7 @@ const GameV2 = () => {
           <input
             placeholder="0"
             type="number"
-            onChange={setDiceModifier}
+            onChange={(e) => setDiceModifier(e.target.value)}
             className="mt-2 form-control m-auto mo-0"
             id="diceModifier"
           />
