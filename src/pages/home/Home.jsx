@@ -1,4 +1,4 @@
-import Game from "../../components/game/Game";
+import Game from "../../components/game/GameV2";
 import React, { Component } from "react";
 
 class Home extends Component {
