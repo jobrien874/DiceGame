@@ -6,11 +6,11 @@ import { faVolumeMute, faVolumeUp } from '@fortawesome/free-solid-svg-icons'
 const MuteButton = ({mute, setMute}) => {
     if (mute) {
         return (
-        <FontAwesomeIcon onClick={setMute} className="MuteButton" icon={faVolumeMute} />
+        <FontAwesomeIcon onClick={() => setMute(false)} className="MuteButton" icon={faVolumeMute} />
         );
       } else {
           return (
-        <FontAwesomeIcon onClick={setMute} className="MuteButton" icon={faVolumeUp} />
+        <FontAwesomeIcon onClick={() => setMute(true)} className="MuteButton" icon={faVolumeUp} />
           );
       }
 };
