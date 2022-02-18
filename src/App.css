@@ -55,6 +55,7 @@
 .MuteButton {
   position: absolute;
   top: 20px;
+  cursor: pointer;
   right: 30px;
 }
 
