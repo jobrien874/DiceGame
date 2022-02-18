@@ -141,13 +141,14 @@ const GameV2 = () => {
 
   const addDice = () => {
     let selDice = [...selectedDice];
-    let diceNumbers = [];
+    let diceNumbersCurrent = [...diceNumbers];
     for (let i = 0; i < diceCount; i++) {
       selDice.push(diceTypeSelected);
-      diceNumbers.push(1);
+      diceNumbersCurrent.push(1);
     }
+    console.log(selDice, 'selected');
     setSelectedDice(selDice);
-    breakdownSelectedDice();
+    breakdownSelectedDice(selDice);
   };
 
 
@@ -161,6 +162,7 @@ const GameV2 = () => {
     window.location.reload();
   };
 
+
   const getDiceNumber = (e) => {
     setDiceCount(e.target.value);
     if (selectedDice.length === 0) {
@@ -168,8 +170,8 @@ const GameV2 = () => {
     }
   };
 
-  const breakdownSelectedDice = () => {
-
+  const breakdownSelectedDice = (selDiceProp) => {
+    let selDice = selDiceProp ? selDiceProp : selectedDice;
     let modifier = diceModifier;
     let modifierText = makeModifierText(modifier)
     let selectedDiceBreakdown = {
@@ -183,7 +185,7 @@ const GameV2 = () => {
       [modifierText]: parseInt(modifier),
     };
 
-    selectedDice.forEach((dice) => {
+    selDice.forEach((dice) => {
       switch (dice) {
         case 6:
           selectedDiceBreakdown.D6 += 1;
