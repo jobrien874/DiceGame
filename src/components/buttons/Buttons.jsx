@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/require-default-props */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -33,8 +34,8 @@ export default function Buttons({
 }
 
 Buttons.propTypes = {
-  selectedDice: PropTypes.string,
-  getDiceRoll: PropTypes.string,
-  refreshDice: PropTypes.string,
-  addDice: PropTypes.string,
+  selectedDice: PropTypes.array,
+  getDiceRoll: PropTypes.func,
+  refreshDice: PropTypes.func,
+  addDice: PropTypes.func,
 };

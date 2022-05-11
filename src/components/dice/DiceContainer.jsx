@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable global-require */
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable react/require-default-props */
@@ -43,8 +44,8 @@ export default function DiceContainer({
 }
 
 DiceContainer.propTypes = {
-  diceCount: PropTypes.string,
-  diceNumber: PropTypes.number,
+  diceCount: PropTypes.number,
+  diceNumber: PropTypes.array,
   total: PropTypes.number,
-  selectedDice: PropTypes.string,
+  selectedDice: PropTypes.array,
 };

@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/require-default-props */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -21,5 +22,5 @@ export default function DiceSelectionBox({ selectionText, selectedDiceBreakdown 
 
 DiceSelectionBox.propTypes = {
   selectionText: PropTypes.string,
-  selectedDiceBreakdown: PropTypes.string,
+  selectedDiceBreakdown: PropTypes.object,
 };
