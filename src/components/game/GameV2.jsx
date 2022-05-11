@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
-import DiceContainer from "../dice/DiceContainer";
-import DiceResults from "../dice/DiceResults";
-import MuteButton from "../audio/MuteButton";
-import Buttons from "../buttons/Buttons";
-import DiceSelectionBox from "../dice/DiceSelectionBox";
+import React, { useEffect, useState } from 'react';
+import DiceContainer from '../dice/DiceContainer';
+import DiceResults from '../dice/DiceResults';
+import MuteButton from '../audio/MuteButton';
+import Buttons from '../buttons/Buttons';
+import DiceSelectionBox from '../dice/DiceSelectionBox';
 
-//statefull functional component
-const GameV2 = () => {
-
-  const diceType = ["D6", "D4", "D8", "D10", "D12", "D20", "D100"];
+// statefull functional component
+function GameV2() {
+  const diceType = ['D6', 'D4', 'D8', 'D10', 'D12', 'D20', 'D100'];
   const maxDiceAmount = [
     1,
     2,
@@ -38,216 +37,120 @@ const GameV2 = () => {
   const [diceCount, setDiceCount] = useState(1);
   const [mute, setMute] = useState(false);
   const [selectedDice, setSelectedDice] = useState([]);
-  const [diceNumbers, setDiceNumbers] = useState([1])
+  const [diceNumbers, setDiceNumbers] = useState([1]);
   const [logPastResultsBreakdown, setLogPastResultsBreakdown] = useState([]);
   const [logPastResults, setLogPastResults] = useState([]);
-  const [selectionText, setSelectionText] = useState("");
+  const [selectionText, setSelectionText] = useState('');
   const [diceTypeSelected, setDiceTypeSelected] = useState(6);
-  const [selectedDiceBreakdown, setSelectedDiceBreakdown] = useState({})
-  const [diceModifier, setDiceModifier] = useState(0)
+  const [selectedDiceBreakdown, setSelectedDiceBreakdown] = useState({});
+  const [diceModifier, setDiceModifier] = useState(0);
 
   useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://c6.patreon.com/becomePatronButton.bundle.js";
+    const script = document.createElement('script');
+    script.src = 'https://c6.patreon.com/becomePatronButton.bundle.js';
     script.async = true;
     document.body.appendChild(script);
-  }, [])
+  }, []);
 
-
-  const setDiceNumbersFunc = (diceCount, diceHistoryChange) => {
+  const setDiceNumbersFunc = (diceCountArg, diceHistoryChange) => {
+    let totalCount = 0;
+    // eslint-disable-next-line radix
     let diceModifierInt = parseInt(diceModifier);
+    const logPastResultsArr = logPastResults;
+    const diceNumbersCurrent = [];
+    // eslint-disable-next-line no-restricted-globals
     if (isNaN(diceModifierInt)) {
       diceModifierInt = 0;
     }
-    if (diceCount.constructor === Array) {
-      let diceNumbersCurrent = [];
-      let total = 0;
-      let logPastResultsArr = logPastResults;
-      for (let i = 0; i < diceCount.length; i++) {
-        let counter = Math.floor(Math.random() * diceCount[i]) + 1;
-        total += counter;
+    if (diceCountArg.constructor === Array) {
+      for (let i = 0; i < diceCountArg.length; i += 1) {
+        const counter = Math.floor(Math.random() * diceCountArg[i]) + 1;
+        totalCount += counter;
         diceNumbersCurrent.push(counter);
       }
-      total += diceModifierInt;
+      totalCount += diceModifierInt;
       if (diceHistoryChange) {
-        logPastResultsArr.push(total);
+        logPastResultsArr.push(totalCount);
       }
       setLogPastResults(logPastResultsArr);
       setDiceNumbers(diceNumbersCurrent);
-      setTotal(total);
+      setTotal(totalCount);
     } else {
-      let diceNumbersCurrent = [];
-      let total = 0;
-      let logPastResultsArr = logPastResults;
-      let diceType = diceTypeSelected;
-      let diceModifierInt = parseInt(diceModifier);
-      for (let i = 0; i < diceCount; i++) {
-        let counter = Math.floor(Math.random() * diceType) + 1;
-        total += counter;
+      for (let i = 0; i < diceCountArg; i += 1) {
+        const counter = Math.floor(Math.random() * diceTypeSelected) + 1;
+        totalCount += counter;
         diceNumbersCurrent.push(counter);
       }
-      total += diceModifierInt;
+      // eslint-disable-next-line no-unused-vars
+      totalCount += diceModifierInt;
       if (diceHistoryChange) {
-        logPastResultsArr.push(total);
+        logPastResultsArr.push(totalCount);
       }
       setLogPastResults(logPastResultsArr);
       setDiceNumbers(diceNumbersCurrent);
-      setTotal(total);
+      setTotal(totalCount);
     }
   };
 
   const getDiceType = (e) => {
-    let diceType = e.target.value;
-    switch (diceType) {
-      case "D6":
-        diceType = 6;
+    let diceTypeChosen = e.target.value;
+    switch (diceTypeChosen) {
+      case 'D6':
+        diceTypeChosen = 6;
         break;
 
-      case "D4":
-        diceType = 4;
+      case 'D4':
+        diceTypeChosen = 4;
         break;
 
-      case "D8":
-        diceType = 8;
+      case 'D8':
+        diceTypeChosen = 8;
         break;
 
-      case "D10":
-        diceType = 10;
+      case 'D10':
+        diceTypeChosen = 10;
         break;
 
-      case "D12":
-        diceType = 12;
+      case 'D12':
+        diceTypeChosen = 12;
         break;
 
-      case "D20":
-        diceType = 20;
+      case 'D20':
+        diceTypeChosen = 20;
         break;
 
-      case "D100":
-        diceType = 100;
+      case 'D100':
+        diceTypeChosen = 100;
         break;
 
       default:
-        diceType = 6;
+        diceTypeChosen = 6;
         break;
     }
-    setDiceTypeSelected(diceType);
+    setDiceTypeSelected(diceTypeChosen);
   };
-
 
   const startAudio = () => {
     if (!mute) {
-      const audio = new Audio("/roll.mp3");
+      const audio = new Audio('/roll.mp3');
       audio.play();
     }
   };
 
-  const addDice = () => {
-    let selDice = [...selectedDice];
-    let diceNumbersCurrent = [...diceNumbers];
-    for (let i = 0; i < diceCount; i++) {
-      selDice.push(diceTypeSelected);
-      diceNumbersCurrent.push(1);
+  const makeModifierText = (modifier) => {
+    if (Math.sign(modifier) === -1) {
+      return ' ';
     }
-    setSelectedDice(selDice);
-    breakdownSelectedDice(selDice);
+    return '+';
   };
 
-
-  const refreshDice = () => {
-    setSelectedDice([])
-    setSelectedDiceBreakdown({})
-  };
-
-  const clearGame = () => {
-    // delete memory and restore state
-    window.location.reload();
-  };
-
-
-  const getDiceNumber = (e) => {
-    setDiceCount(e.target.value);
-    if (selectedDice.length === 0) {
-      setDiceNumbersFunc(diceCount, false);
-    }
-  };
-
-  const breakdownSelectedDice = (selDiceProp) => {
-    let selDice = selDiceProp ? selDiceProp : selectedDice;
-    let modifierText = makeModifierText(diceModifier)
-    let selectedDiceBreakdown = {
-      D4: 0,
-      D6: 0,
-      D8: 0,
-      D10: 0,
-      D12: 0,
-      D20: 0,
-      D100: 0,
-      [modifierText]: parseInt(diceModifier),
-    };
-
-    selDice.forEach((dice) => {
-      switch (dice) {
-        case 6:
-          selectedDiceBreakdown.D6 += 1;
-          break;
-
-        case 4:
-          selectedDiceBreakdown.D4 += 1;
-          break;
-
-        case 8:
-          selectedDiceBreakdown.D8 += 1;
-          break;
-
-        case 10:
-          selectedDiceBreakdown.D10 += 1;
-          break;
-
-        case 12:
-          selectedDiceBreakdown.D12 += 1;
-          break;
-
-        case 20:
-          selectedDiceBreakdown.D20 += 1;
-          break;
-
-        case 100:
-          selectedDiceBreakdown.D100 += 1;
-          break;
-
-        default:
-          selectedDiceBreakdown.D6 += 1;
-          break;
-      }
-    });
-    setSelectedDiceBreakdown(selectedDiceBreakdown)
-
-    if (Object.entries(selectedDiceBreakdown).length > 0 || Object.entries(selectedDiceBreakdown).length < 0) {
-      makeSelectionBoxString(selectedDiceBreakdown);
-    }
-  };
-
-  const getDiceRoll = () => {
-    startAudio();
-    let results = logPastResultsBreakdown;
-    if (selectedDice.length > 0) {
-      breakdownSelectedDice();
-      setDiceNumbersFunc(selectedDice, true);
-      results.push(selectionText);
-    } else {
-      setDiceNumbersFunc(diceCount, true);
-      results.push("Freeroll");
-    }
-    setLogPastResultsBreakdown(results);
-  };
-
-  const makeSelectionBoxString = (selectedDiceBreakdown) => {
-    let selectionTextString = "";
-    for (const [key, value] of Object.entries(selectedDiceBreakdown)) {
-      if (value > 0 && key !== "+") {
+  const makeSelectionBoxString = (selectedDiceBreakdownArg) => {
+    let selectionTextString = '';
+    // eslint-disable-next-line no-restricted-syntax
+    for (const [key, value] of Object.entries(selectedDiceBreakdownArg)) {
+      if (value > 0 && key !== '+') {
         selectionTextString += `${key}x${value} `;
-      } else if (value < 0 || key === "+") {
+      } else if (value < 0 || key === '+') {
         if (value !== 0) {
           selectionTextString += `${key}${value}`;
         }
@@ -256,13 +159,106 @@ const GameV2 = () => {
     setSelectionText(selectionTextString);
   };
 
-  const makeModifierText = (modifier) => {
-    if (Math.sign(modifier) === -1) {
-      return " ";
-    } else {
-      return "+";
+  const breakdownSelectedDice = (selDiceProp) => {
+    // eslint-disable-next-line no-unneeded-ternary
+    const selDice = selDiceProp ? selDiceProp : selectedDice;
+    const modifierText = makeModifierText(diceModifier);
+    const selectedDiceBreakdownObj = {
+      D4: 0,
+      D6: 0,
+      D8: 0,
+      D10: 0,
+      D12: 0,
+      D20: 0,
+      D100: 0,
+      // eslint-disable-next-line radix
+      [modifierText]: parseInt(diceModifier),
+    };
+
+    selDice.forEach((dice) => {
+      switch (dice) {
+        case 6:
+          selectedDiceBreakdownObj.D6 += 1;
+          break;
+
+        case 4:
+          selectedDiceBreakdownObj.D4 += 1;
+          break;
+
+        case 8:
+          selectedDiceBreakdownObj.D8 += 1;
+          break;
+
+        case 10:
+          selectedDiceBreakdownObj.D10 += 1;
+          break;
+
+        case 12:
+          selectedDiceBreakdownObj.D12 += 1;
+          break;
+
+        case 20:
+          selectedDiceBreakdownObj.D20 += 1;
+          break;
+
+        case 100:
+          selectedDiceBreakdownObj.D100 += 1;
+          break;
+
+        default:
+          selectedDiceBreakdownObj.D6 += 1;
+          break;
+      }
+    });
+
+    setSelectedDiceBreakdown(selectedDiceBreakdownObj);
+    const objectEntriesLength = Object.entries(selectedDiceBreakdownObj).length;
+    if (objectEntriesLength > 0 || objectEntriesLength < 0) {
+      makeSelectionBoxString(selectedDiceBreakdownObj);
     }
-  }
+  };
+
+  const addDice = () => {
+    const selDice = [...selectedDice];
+    const diceNumbersCurrent = [...diceNumbers];
+    for (let i = 0; i < diceCount; i += 1) {
+      selDice.push(diceTypeSelected);
+      diceNumbersCurrent.push(1);
+    }
+    setSelectedDice(selDice);
+    breakdownSelectedDice(selDice);
+  };
+
+  const refreshDice = () => {
+    setSelectedDice([]);
+    setSelectedDiceBreakdown({});
+  };
+
+  const clearGame = () => {
+    // delete memory and restore state
+    window.location.reload();
+  };
+
+  const getDiceNumber = (e) => {
+    setDiceCount(e.target.value);
+    if (selectedDice.length === 0) {
+      setDiceNumbersFunc(diceCount, false);
+    }
+  };
+
+  const getDiceRoll = () => {
+    startAudio();
+    const results = logPastResultsBreakdown;
+    if (selectedDice.length > 0) {
+      breakdownSelectedDice();
+      setDiceNumbersFunc(selectedDice, true);
+      results.push(selectionText);
+    } else {
+      setDiceNumbersFunc(diceCount, true);
+      results.push('Freeroll');
+    }
+    setLogPastResultsBreakdown(results);
+  };
 
   return (
     <>
@@ -284,42 +280,48 @@ const GameV2 = () => {
       />
       <div className="container-fluid w-25  DiceForm">
         <div className="form-group mt-2 DiceFormInput">
-          <label htmlFor="diceCount">Dice Type:</label>
-          <select
-            className="mt-2 form-control m-auto mb-0"
-            id="diceStyle"
-            onChange={getDiceType}
-          >
-            {diceType.map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </select>
+          <label htmlFor="diceCount">
+            Dice Type:
+            <select
+              className="mt-2 form-control m-auto mb-0"
+              id="diceStyle"
+              onChange={getDiceType}
+            >
+              {diceType.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
         <div className="form-group mt-2 DiceFormInput">
-          <label htmlFor="diceCount">Dice Count:</label>
-          <select
-            className="mt-2 form-control m-auto mb-0"
-            id="diceCount"
-            onChange={getDiceNumber}
-          >
-            {maxDiceAmount.map((number) => (
-              <option key={number} value={number}>
-                {number}
-              </option>
-            ))}
-          </select>
+          <label htmlFor="diceCount">
+            Dice Count:
+            <select
+              className="mt-2 form-control m-auto mb-0"
+              id="diceCount"
+              onChange={getDiceNumber}
+            >
+              {maxDiceAmount.map((number) => (
+                <option key={number} value={number}>
+                  {number}
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
         <div className="form-group mt-2 DiceFormInput">
-          <label htmlFor="diceModifier">Modifier:</label>
-          <input
-            placeholder="0"
-            type="number"
-            onChange={(e) => setDiceModifier(e.target.value)}
-            className="mt-2 form-control m-auto mo-0"
-            id="diceModifier"
-          />
+          <label htmlFor="diceModifier">
+            Modifier:
+            <input
+              placeholder="0"
+              type="number"
+              onChange={(e) => setDiceModifier(e.target.value)}
+              className="mt-2 form-control m-auto mo-0"
+              id="diceModifier"
+            />
+          </label>
         </div>
       </div>
       <Buttons
@@ -329,8 +331,7 @@ const GameV2 = () => {
         addDice={addDice}
       />
     </>
-  )
-
-};
+  );
+}
 
 export default GameV2;

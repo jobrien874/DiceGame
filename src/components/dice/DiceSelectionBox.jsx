@@ -1,32 +1,25 @@
-import React from "react";
+/* eslint-disable react/require-default-props */
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const DiceSelectionBox = ({ selectionText, selectedDiceBreakdown }) => {
-/*   const makeSelectionBoxString = () => {
-    let selection = selectedDiceBreakdown;
-    let selectionText = "";
-    for (const [key, value] of Object.entries(selection)) {
-      if (value > 0) {
-        selectionText += `${key}x${value} `;
-      }
-    }
-    return selectionText;
-  } */
-
+export default function DiceSelectionBox({ selectionText, selectedDiceBreakdown }) {
   if (Object.entries(selectedDiceBreakdown).length > 0) {
     return (
-      <React.Fragment>
+      <>
         <div className="DiceSelectionBox-Selected">Selected Dice</div>
         <div className="DiceSelectionBox">{selectionText}</div>
-      </React.Fragment>
-    );
-  } else {
-    return (
-      <React.Fragment>
-        <div className="DiceSelectionBox-Selected">Selected Dice</div>
-        <div className="DiceSelectionBox"></div>
-      </React.Fragment>
+      </>
     );
   }
-};
+  return (
+    <>
+      <div className="DiceSelectionBox-Selected">Selected Dice</div>
+      <div className="DiceSelectionBox" />
+    </>
+  );
+}
 
-export default DiceSelectionBox;
+DiceSelectionBox.propTypes = {
+  selectionText: PropTypes.string,
+  selectedDiceBreakdown: PropTypes.string,
+};

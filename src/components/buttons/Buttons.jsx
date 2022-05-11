@@ -1,32 +1,40 @@
-import React from "react";
+/* eslint-disable react/require-default-props */
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const Buttons = ({ selectedDice, getDiceRoll, refreshDice, addDice }) => {
+export default function Buttons({
+  selectedDice, getDiceRoll, refreshDice, addDice,
+}) {
   if (selectedDice.length === 0) {
     return (
       <div className="ButtonContainer">
-        <button className="btn btn-secondary mt-4" onClick={addDice}>
+        <button type="button" className="btn btn-secondary mt-4" onClick={addDice}>
           Add Dice
         </button>
-        <button className="btn btn-secondary mt-4" onClick={getDiceRoll}>
+        <button type="button" className="btn btn-secondary mt-4" onClick={getDiceRoll}>
           Click To Roll Dice
         </button>
       </div>
     );
-  } else {
-    return (
-      <div className="ButtonContainer">
-        <button className="btn btn-secondary mt-4" onClick={refreshDice}>
-          Refresh Dice
-        </button>
-        <button className="btn btn-secondary mt-4" onClick={addDice}>
-          Add Dice
-        </button>
-        <button className="btn btn-secondary mt-4" onClick={getDiceRoll}>
-          Click To Roll Selected Dice
-        </button>
-      </div>
-    );
   }
-};
+  return (
+    <div className="ButtonContainer">
+      <button type="button" className="btn btn-secondary mt-4" onClick={refreshDice}>
+        Refresh Dice
+      </button>
+      <button type="button" className="btn btn-secondary mt-4" onClick={addDice}>
+        Add Dice
+      </button>
+      <button type="button" className="btn btn-secondary mt-4" onClick={getDiceRoll}>
+        Click To Roll Selected Dice
+      </button>
+    </div>
+  );
+}
 
-export default Buttons;
+Buttons.propTypes = {
+  selectedDice: PropTypes.string,
+  getDiceRoll: PropTypes.string,
+  refreshDice: PropTypes.string,
+  addDice: PropTypes.string,
+};

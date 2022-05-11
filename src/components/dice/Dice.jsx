@@ -1,25 +1,25 @@
-import React from "react";
+/* eslint-disable react/require-default-props */
+import React from 'react';
+import PropTypes from 'prop-types';
 
-//stateless functional component
-const Dice = ({ diceImage, diceNumber }) => {
+// stateless functional component
+export default function Dice({ diceImage, diceNumber }) {
   if (diceImage) {
     return (
-      <React.Fragment>
-        <div className="DiceContainer diceImage">
-          <img className="DiceImage" alt="dice" src={diceImage} />
-        </div>
-      </React.Fragment>
-    );
-  } else {
-    return (
-      <React.Fragment>
-        <div className="DiceContainer diceImageTotal">
-          <span className="DiceContainer-total">{diceNumber}</span>
-          <img className="DiceImage" alt="dice" src="./dice.png" />
-        </div>
-      </React.Fragment>
+      <div className="DiceContainer diceImage">
+        <img className="DiceImage" alt="dice" src={diceImage} />
+      </div>
     );
   }
-};
+  return (
+    <div className="DiceContainer diceImageTotal">
+      <span className="DiceContainer-total">{diceNumber}</span>
+      <img className="DiceImage" alt="dice" src="./dice.png" />
+    </div>
+  );
+}
 
-export default Dice;
+Dice.propTypes = {
+  diceImage: PropTypes.string,
+  diceNumber: PropTypes.number,
+};
